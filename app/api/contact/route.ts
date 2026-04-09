@@ -33,22 +33,31 @@ export async function POST(req: NextRequest) {
     },
   });
 
-  await transporter.sendMail({
-    from: `"BlueBox Website" <${process.env.SMTP_USER}>`,
-    to: "contact@blueboxgroup.io",
-    replyTo: email,
-    subject: `New contact request from ${fullName} – ${companyName}`,
-    html: `
-      <h2>New Contact Request</h2>
-      <p><strong>Full Name:</strong> ${fullName}</p>
-      <p><strong>Company:</strong> ${companyName}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Phone:</strong> ${phone}</p>
-      <hr />
-      <p><strong>Message:</strong></p>
-      <p>${message.replace(/\n/g, "<br/>")}</p>
-    `,
-  });
+  try {
+    await transporter.sendMail({
+      from: `"BlueBox Website" <contact@blueboxgroup.io>`,
+      to: "karim.meziane@blueboxgroup.io",
+      replyTo: email,
+      subject: `New contact request from ${fullName} – ${companyName}`,
+      html: `
+        <h2>New Contact Request</h2>
+        <p><strong>Full Name:</strong> ${fullName}</p>
+        <p><strong>Company:</strong> ${companyName}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Phone:</strong> ${phone}</p>
+        <hr />
+        <p><strong>Message:</strong></p>
+        <p>${message.replace(/\n/g, "<br/>")}</p>
+      `,
+    });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("SMTP error:", message);
+    return NextResponse.json(
+      { error: message },
+      { status: 500 }
+    );
+  }
 
   return NextResponse.json({ success: true });
 }

@@ -9,13 +9,13 @@ const offices = [
   {
     country: "France", flag: "🇫🇷",
     address: ["1 rue de Stockholm", "75008 Paris"],
-    phone: "+33 1 84 88 00 00",
+    phone: "+33 1 88 61 10 47",
     email: "paris@blueboxgroup.io",
   },
   {
     country: "Maroc", flag: "🇲🇦",
-    address: ["Tour Casablanca Finance City", "Bd Sidi Mohammed Ben Abdallah", "20000 Casablanca"],
-    phone: "+212 5 22 00 00 00",
+    address: ["CFC Boulevard Sidi Abderahmane", "20000 Casablanca"],
+    phone: "06 63 80 09 02",
     email: "casablanca@blueboxgroup.io",
   },
 ];

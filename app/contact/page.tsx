@@ -15,6 +15,7 @@ export default function ContactPage() {
   const [form, setForm] = useState({ fullName: "", companyName: "", email: "", phone: "", message: "" });
   const [emailError, setEmailError] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorDetail, setErrorDetail] = useState("");
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
     const { name, value } = e.target;
@@ -31,7 +32,8 @@ export default function ContactPage() {
     setStatus("loading");
     try {
       const res = await fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form) });
-      if (!res.ok) throw new Error();
+      const data = await res.json();
+      if (!res.ok) { setErrorDetail(data.error ?? "Unknown error"); throw new Error(); }
       setStatus("success");
       setForm({ fullName: "", companyName: "", email: "", phone: "", message: "" });
     } catch { setStatus("error"); }
@@ -92,7 +94,7 @@ export default function ContactPage() {
                   <textarea name="message" required rows={5} value={form.message} onChange={handleChange} placeholder={p.messagePh}
                     className="w-full rounded-lg border-2 border-slate-200 px-4 py-3 text-sm text-slate-900 placeholder-slate-400 focus:border-[#1B2B5E] focus:outline-none transition-colors resize-none" />
                 </div>
-                {status === "error" && <p className="text-sm font-medium text-[#E8231A]">{p.errorMsg}</p>}
+                {status === "error" && <p className="text-sm font-medium text-[#E8231A]">{p.errorMsg}{errorDetail && ` — ${errorDetail}`}</p>}
                 <button type="submit" disabled={status === "loading" || !!emailError}
                   className="w-full rounded-xl bg-[#E8231A] px-6 py-4 text-sm font-bold text-white hover:bg-[#C41C14] disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
                   {status === "loading" ? p.sendingBtn : p.submitBtn}
