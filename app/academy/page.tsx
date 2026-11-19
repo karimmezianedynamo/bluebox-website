@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -42,6 +43,22 @@ export default function AcademyPage() {
                 </div>
               </div>
             ))}
+          </div>
+        </section>
+
+        <section className="bg-white px-6 pb-16">
+          <div className="mx-auto max-w-7xl">
+            <Link href="/academy/sap-ariba" className="group relative block overflow-hidden rounded-3xl bg-[#1B2B5E] p-8 md:p-10 transition-shadow hover:shadow-2xl">
+              <div className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[#2C3E7A] opacity-60" />
+              <div className="relative grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
+                <div>
+                  <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-white/80"><span className="h-2 w-2 rounded-full bg-[#E8231A]" />{p.aribaBanner.tag}</span>
+                  <h2 className="mt-4 text-2xl md:text-3xl font-bold text-white">{p.aribaBanner.title}</h2>
+                  <p className="mt-3 max-w-3xl text-sm md:text-base leading-relaxed text-white/70">{p.aribaBanner.sub}</p>
+                </div>
+                <span className="inline-flex shrink-0 items-center justify-center rounded-xl bg-[#E8231A] px-6 py-3.5 text-sm font-semibold text-white group-hover:bg-[#C41C14] transition-colors">{p.aribaBanner.cta}</span>
+              </div>
+            </Link>
           </div>
         </section>
 
